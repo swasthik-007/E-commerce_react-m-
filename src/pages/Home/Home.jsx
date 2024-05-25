@@ -14,6 +14,8 @@ function Home() {
         setCategories(response.data);
     }
 
+
+
     useEffect(() => {
         downloadCategories();
     }, [])
