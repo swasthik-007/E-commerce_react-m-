@@ -15,15 +15,12 @@ import {
 import './Header.css';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-
 function Header(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [token, setToken, removeToken] = useCookies(['jwt-token']);
-
   const toggle = () => setIsOpen(!isOpen);
 
   useEffect(() => {
-    console.log(token, setToken, removeToken);
   }, [token]);
 
   return (
