@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
 
-function Auth({ onSubmit }) {
+function Auth({ onSubmit }, ref) {
 
 
     const [formDetails, setFormDetails] = useState({email: '', password: '', username: '', isLoading: false});
+
     function updateEmail(updatedEmail) {
         setFormDetails({...formDetails, email: updatedEmail});
     }
@@ -13,20 +14,23 @@ function Auth({ onSubmit }) {
     function updateUsername(updateUsername) {
         setFormDetails({...formDetails, username: updateUsername});
     }
-
     function onFormSubmit() {
         setFormDetails({...formDetails, isLoading: true});
         onSubmit(formDetails, resetForm);
     }
-
     function resetForm() {
         setFormDetails({email: '', password: '', username: '', isLoading: false});
     }
 
+    useImperativeHandle(ref, () => {
+        return {
+            resetFormData: resetForm
+        }
+    }, []);
+
     useEffect(() => {
         setFormDetails({email: '', password: '', username: '', isLoading: false});
     }, [])
-
     return (
         <>
             <div className="input-group">
@@ -48,4 +52,5 @@ function Auth({ onSubmit }) {
         </>
     )
 }
-export default Auth;
+
+export default React.forwardRef(Auth);
