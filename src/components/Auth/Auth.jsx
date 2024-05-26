@@ -1,31 +1,31 @@
 import { useEffect, useState } from "react";
 
-function Auth({ onSubmit, resetForm }) {
+function Auth({ onSubmit }) {
 
 
     const [formDetails, setFormDetails] = useState({email: '', password: '', username: '', isLoading: false});
-
-
     function updateEmail(updatedEmail) {
         setFormDetails({...formDetails, email: updatedEmail});
     }
-
     function updatePassword(updatedPassword) {
         setFormDetails({...formDetails, password: updatedPassword});
     }
-
     function updateUsername(updateUsername) {
         setFormDetails({...formDetails, username: updateUsername});
     }
 
     function onFormSubmit() {
         setFormDetails({...formDetails, isLoading: true});
-        onSubmit(formDetails);
+        onSubmit(formDetails, resetForm);
+    }
+
+    function resetForm() {
+        setFormDetails({email: '', password: '', username: '', isLoading: false});
     }
 
     useEffect(() => {
         setFormDetails({email: '', password: '', username: '', isLoading: false});
-    }, [resetForm])
+    }, [])
 
     return (
         <>
@@ -38,7 +38,7 @@ function Auth({ onSubmit, resetForm }) {
             <div className="input-group">
                 <input onChange={(e) => updatePassword(e.target.value)} value={formDetails.password} type="password" className="form-control" placeholder="Password" id="loginPassword"/>
             </div>
-
+            
             <div className="input-group">
             <button onClick={onFormSubmit} className="form-control btn btn-primary" type="button" disabled={formDetails.isLoading}>
             {(formDetails.isLoading) && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
